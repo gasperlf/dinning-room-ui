@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">DRE</a>
+
+    <button class="navbar-toggler" (click)="toggleNavBar()" type="button" data-toggle="collapse"
+        data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [class.show]="isOpen" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/' routerLinkActive="active">Home</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/enrollments' routerLinkActive="active" *ngIf="!isLogged">Enrollments</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+            <li class="nav-item">
+                <a class="btn btn-success m-1" routerLink='/signup' routerLinkActive="active" *ngIf="!isLogged">Sign
+                    Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-danger m-1" routerLink='/logout' routerLinkActive="active" (click)="logout()"
+                    *ngIf="isLogged">Log out</a>
+            </li>
+        </ul>
+
+    </div>
+
+</nav>
