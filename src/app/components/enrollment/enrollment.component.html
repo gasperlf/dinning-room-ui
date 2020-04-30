@@ -69,7 +69,7 @@
                 <label for="departements">Departamento</label>
                 <select id="departements" class="form-control">
                     <option selected>Choose...</option>
-                    <option>...</option>
+                    <option [value]="department.id" *ngFor="let department of getDepartments()">{{department.name}}</option>
                 </select>
             </div>
 
