@@ -1,151 +1,231 @@
-<div class="m-1">
+<main class="container">
 
-    <form class="well needs-validation" novalidate>
-        <legend>
-            <h2><b>Formulario de registro</b></h2>
-        </legend><br>
+    <div class="m-1">
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="typeDocument">Tipo documento</label>
-                <select id="typeDocument" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="number">Número documento</label>
-                <input type="text" class="form-control" id="number" placeholder="Número documento">
-            </div>
-        </div>
+        <form #form="ngForm" class="well needs-validation" (ngSubmit)="enrollment(form)">
+            <legend>
+                <h2><b>Formulario de registro</b></h2>
+            </legend><br>
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="firstName">Primer nombre</label>
-                <input type="text" class="form-control" id="firstName" placeholder="Primer nombre">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="secondName">Segundo nombre</label>
-                <input type="text" class="form-control" id="secondName" placeholder="Segundo nombre">
-            </div>
-        </div>
+            <div class="cross-validation" [class.cross-validation-error]="(form.touched || form.dirty)">
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="firstSurname">Primer apellido</label>
-                <input type="text" class="form-control" id="firstSurname" placeholder="Primer apellido">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="secondSurName">Segundo apellido</label>
-                <input type="text" class="form-control" id="secondSurName" placeholder="Segundo apellido">
-            </div>
-        </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="typeDocument">Tipo documento</label>
+                        <select id="typeDocument" ngModel #documentTypeId="ngModel" name="documentTypeId"
+                            class="form-control" required>
+                            <option value="" disabled>Seleccione...</option>
+                            <option *ngFor="let document of getDocumentsType()" [ngValue]="document.documentTypeId">
+                                {{document.documentTypeName}}</option>
+                        </select>
+                        <div *ngIf="documentTypeId.errors && documentTypeId.touched" class="alert alert-danger">
+                            <div *ngIf="documentTypeId.errors.required">Tipo de documento es requerido.</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="number">Número documento</label>
+                        <input ngModel #dni="ngModel" name="dni" type="text" class="form-control" id="number"
+                            placeholder="Número documento" minlength="8" required>
 
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="gender">Genero</label>
-                <select id="gender" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="birthday">Fecha de nacimiento</label>
-                <input type="text" class="form-control" id="birthday">
-            </div>
+                        <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="alert alert-danger">
+                            <div *ngIf="dni.errors.required">
+                                Número de documento es requerido.
+                            </div>
+                            <div *ngIf="dni.errors.minlength">
+                                Número de documento minimo 8 caracteres.
+                            </div>
+                        </div>
 
-            <div class="form-group col-md-4">
-                <label for="socialStratum">Estrato</label>
-                <select id="socialStratum" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
-            </div>
-        </div>
+                    </div>
+                </div>
 
-        <div class="form-row">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="firstName">Primer nombre</label>
+                        <input ngModel #firstName="ngModel" name="firstName" type="text" class="form-control"
+                            id="firstName" placeholder="Primer nombre" minlength="5" required>
 
-            <div class="form-group col-md-4">
-                <label for="departements">Departamento</label>
-                <select id="departements" class="form-control">
-                    <option selected>Choose...</option>
-                    <option [value]="department.id" *ngFor="let department of getDepartments()">{{department.name}}</option>
-                </select>
-            </div>
+                        <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="firstName.errors.required">
+                                Primer nombre es requerido.
+                            </div>
+                            <div *ngIf="firstName.errors.minlength">
+                                Primer nombre minimo 5 caracteres.
+                            </div>
+                        </div>
 
-            <div class="form-group col-md-4">
-                <label for="cities">Ciudad</label>
-                <select id="cities" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
-            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="secondName">Segundo nombre</label>
+                        <input ngModel #secondName="ngModel" name="secondName" type="text" class="form-control"
+                            id="secondName" placeholder="Segundo nombre">
+                    </div>
+                </div>
 
-            <div class="form-group col-md-4">
-                <label for="neigthbordhoods">Barrio</label>
-                <select id="neigthbordhoods" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="Address">
-            </div>
-            <div class="form-group col-md-4">
-                <label for="telephone">Teléfono</label>
-                <input type="number" class="form-control" id="telephone" placeholder="Teléfono">
-            </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="firstSurname">Primer apellido</label>
+                        <input ngModel #firstSurname="ngModel" name="firstSurname" type="text" class="form-control"
+                            id="firstSurname" placeholder="Primer apellido" min="5" required>
 
-            <div class="form-group col-md-4">
-                <label for="cellphone">Celular</label>
-                <input type="number" class="form-control" id="cellphone" placeholder="Celular">
-            </div>
-        </div>
+                        <div *ngIf="firstSurname.invalid && (firstSurname.dirty || firstSurname.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="firstSurname.errors.required">
+                                Primer apellido es requerido.
+                            </div>
+                            <div *ngIf="firstSurname.errors.minlength">
+                                Primer apellido minimo 5 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="secondSurName">Segundo apellido</label>
+                        <input ngModel #secondSurName="ngModel" name="secondSurName" type="text" class="form-control"
+                            id="secondSurName" placeholder="Segundo apellido">
+                    </div>
+                </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="institute">Institucion</label>
-                <select id="institute" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="grade">Grado escolar</label>
-                <select id="grade" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="group">Grupo</label>
-                <input type="text" class="form-control" id="group" placeholder="Grupo">
-            </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="gender">Genero</label>
+                        <select ngModel #gender="ngModel" name="gender" id="gender" class="form-control" required>
+                            <option value="" disabled>Seleccoine...</option>
+                            <option value="H">Hombre</option>
+                            <option value="M">Mujer</option>
+                        </select>
+                        <div *ngIf="gender.errors && gender.touched" class="alert alert-danger">
+                            <div *ngIf="gender.errors.required">Genero es requerido.</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="birthday">Fecha de nacimiento</label>
+                        <div class="input-group">
+                            <input ngModel #birthday="ngModel" name="birthday" ngbDatepicker #d="ngbDatepicker"
+                                class="form-control" id="birthday" placeholder="yyyy-mm-dd" required>
+                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                type="button"></button>
+                        </div>
+                        <div *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="birthday.errors.required">
+                                Fecha de nacimiento es requerida.
+                            </div>
+                        </div>
+                    </div>
 
-        </div>
-
-        <div class="form-row">
-                <div class="form-group col-md-4">
-                        <label for="ethnic">Etnia</label>
-                        <select id="ethnic" class="form-control">
-                            <option selected>Choose...</option>
+                    <div class="form-group col-md-4">
+                        <label for="socialStratum">Estrato</label>
+                        <select id="socialStratum" class="form-control">
+                            <option selected>Seleccione...</option>
                             <option>...</option>
                         </select>
                     </div>
-        </div>
+                </div>
 
-        <div class="form-group">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    La familia del estudiante acepta la captura de información y fotos ?
-                </label>
+                <div class="form-row">
+
+                    <div class="form-group col-md-4">
+                        <label for="departements">Departamento</label>
+                        <select id="departements" ngModel #departmentId="ngModel" name="departmentId"
+                            class="form-control" (change)="changeDepartment($event.target.value,form)" required>
+                            <option value="" disabled>Seleccione...</option>
+                            <option *ngFor="let department of getDepartments()" [ngValue]="department.id">
+                                {{department.name}}</option>
+                        </select>
+                        <div *ngIf="departmentId.errors && departmentId.touched" class="alert alert-danger">
+                                <div *ngIf="departmentId.errors.required">Departamento es requerido.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="cities">Ciudad</label>
+                        <select ngModel #cityAddressId="ngModel" name="cityAddressId"  id="cities" class="form-control" 
+                        (change)="changeCity($event.target.value,form)" required>
+                            <option disabled>Seleccione...</option>
+                            <option *ngFor="let city of getCities()" [ngValue]="city.id">
+                                    {{city.name}}</option>
+                        </select>
+                        <div *ngIf="cityAddressId.errors && cityAddressId.touched" class="alert alert-danger">
+                                <div *ngIf="cityAddressId.errors.required">Ciudad es requerida.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="neigthbordhoods">Barrio</label>
+                        <select ngModel #neighborhoodId="ngModel" name="neighborhoodId" id="neigthbordhoods" class="form-control" required>
+                            <option value="" disabled>Seleccione...</option>
+                            <option *ngFor="let neighborhood of getNeighborhoods()" [ngValue]="neighborhood.id">
+                                    {{neighborhood.name}}</option>
+                        </select>
+                        <div *ngIf="neighborhoodId.errors && neighborhoodId.touched" class="alert alert-danger">
+                                <div *ngIf="neighborhoodId.errors.required">Barrio es requerido.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Address" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="telephone">Teléfono</label>
+                        <input type="number" class="form-control" id="telephone" placeholder="Teléfono">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="cellphone">Celular</label>
+                        <input type="number" class="form-control" id="cellphone" placeholder="Celular">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="institute">Institucion</label>
+                        <select id="institute" class="form-control" required>
+                            <option value="" disabled>Seleccione...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="grade">Grado escolar</label>
+                        <select id="grade" class="form-control" required>
+                            <option value="" disabled>Seleccione...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="group">Grupo</label>
+                        <input type="text" class="form-control" id="group" placeholder="Grupo" required>
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="ethnic">Etnia</label>
+                        <select id="ethnic" class="form-control" required>
+                            <option value="" disabled>Seleccione...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                        <label class="form-check-label" for="gridCheck">
+                            La familia del estudiante acepta la captura de información y fotos ?
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i>Siguiente</button>
+
+                <p>Form value: {{ form.value | json }}</p>
+                <p>Form valid: {{ form.valid }}</p>
+                <p>Form invalid: {{ form.invalid }}</p>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">
-            <i class="fa fa-save"></i>Siguiente</button>
-    </form>
-</div>
+        </form>
+    </div>
+</main>
