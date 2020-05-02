@@ -1,0 +1,45 @@
+<h4>Formulario de resgitro</h4>
+<mat-divider></mat-divider>
+
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Datos personales</ng-template>
+            <mat-form-field>
+                <mat-label>Primer nombre</mat-label>
+                <input matInput placeholder="Primer nombre" formControlName="firstCtrl" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Siguiente</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Dirección</ng-template>
+        </form>
+        <div>
+            <button mat-button matStepperPrevious>Atras</button>
+            <button mat-button matStepperNext>Siguiente</button>
+        </div>
+    </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Fotos</ng-template>
+        </form>
+        <div>
+            <button mat-button matStepperPrevious>Atras</button>
+            <button mat-button matStepperNext>Siguiente</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>Haz terminado.</p>
+        <div>
+            <button mat-button matStepperPrevious>Atras</button>
+            <button mat-button (click)="stepper.reset()">Guardar</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

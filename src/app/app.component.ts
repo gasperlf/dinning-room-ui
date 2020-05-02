@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  
+  title = 'dashboard';
 
-  constructor(private ngXSpinnerService: NgxSpinnerService) {
+  constructor(private spinner: NgxSpinnerService) {
 
   }
 
   ngOnInit() {
-    this.spinner();
-  }
+    /** spinner starts on init */
+    this.spinner.show();
 
-  spinner() {
-    this.ngXSpinnerService.show();
     setTimeout(() => {
-      this.ngXSpinnerService.hide();
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
     }, 3000);
   }
 

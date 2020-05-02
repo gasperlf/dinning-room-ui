@@ -1,0 +1,101 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span> APP LOGO </span>
+        <button mat-button routerLink="/admin/dashboard">
+            <mat-icon>home</mat-icon>Dashboard
+        </button>
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+            <ul fxLayout="row" fxLayoutGap="20px">
+
+                <button mat-icon-button>
+                    <mat-icon>power_settings_new</mat-icon>
+                </button>
+
+            </ul>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div fxShow="false" fxShow.gt-xs="true"></div>
+<br>
+<mat-divider></mat-divider>
+<br>
+<mat-drawer-container>
+    <mat-drawer-content>
+
+        <section>
+
+            <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" fxLayoutGap.sm="8px">
+                <div fxFlex="33.33">
+                    <mat-card>
+                        <mat-card-content>
+                            <p>
+                                The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from
+                                Japan.
+                                A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
+                                originally
+                                bred for hunting.
+                            </p>
+                            
+                        </mat-card-content>    
+                        <mat-card-footer>
+                                <mat-divider class="mb-1"></mat-divider>
+                                <button class="portfolio-button" mat-icon-button>
+                                        <mat-icon class="text-muted">link</mat-icon>
+                                    </button>
+                                    <button class="portfolio-button" mat-icon-button>
+                                        <mat-icon class="text-muted">share</mat-icon>
+                                    </button>
+                                
+                        </mat-card-footer>
+                    </mat-card>
+                </div>
+                <div fxFlex="33%">
+                    <mat-card>
+                        <mat-card-content>
+                            <p>something</p>
+                            
+                        </mat-card-content>
+                        <mat-card-footer>
+                                <mat-divider class="mb-1"></mat-divider>
+                                <button class="portfolio-button" mat-icon-button>
+                                        <mat-icon class="text-muted">link</mat-icon>
+                                    </button>
+                                    <button class="portfolio-button" mat-icon-button>
+                                        <mat-icon class="text-muted">share</mat-icon>
+                                    </button>
+                        </mat-card-footer>
+                    </mat-card>
+                </div>
+
+                <div fxFlex="33%">
+                    <mat-card>
+                        <mat-card-content>
+                            <p>something</p>
+                            
+                        </mat-card-content>
+                        <mat-card-footer>
+                                <mat-divider class="mb-1"></mat-divider>
+                                <button class="portfolio-button" mat-icon-button>
+                                        <mat-icon class="text-muted">link</mat-icon>
+                                    </button>
+                                    <button class="portfolio-button" mat-icon-button>
+                                        <mat-icon class="text-muted">share</mat-icon>
+                                    </button>
+                        </mat-card-footer>
+                    </mat-card>
+                </div>
+            </div>
+
+        </section>
+
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+    </mat-drawer-content>
+</mat-drawer-container>
+<mat-divider></mat-divider>
+<footer>
+    &copy; All rigths reserved 2020
+</footer>
+<router-outlet></router-outlet>
