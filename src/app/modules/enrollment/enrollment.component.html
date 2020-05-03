@@ -1,45 +1,183 @@
-<h4>Formulario de resgitro</h4>
-<mat-divider></mat-divider>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h4>Formulario de resgitro</h4>
+            <mat-divider></mat-divider>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <br>
+        <br>
+        <mat-horizontal-stepper labelPosition="bottom" linear>
+            <mat-step [stepControl]="profileFormGroup">
+                <form [formGroup]="profileFormGroup">
 
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-            <ng-template matStepLabel>Datos personales</ng-template>
-            <mat-form-field>
-                <mat-label>Primer nombre</mat-label>
-                <input matInput placeholder="Primer nombre" formControlName="firstCtrl" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperNext>Siguiente</button>
-            </div>
-        </form>
-    </mat-step>
+                    <ng-template matStepLabel>Datos personales</ng-template>
 
-    <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Dirección</ng-template>
-        </form>
-        <div>
-            <button mat-button matStepperPrevious>Atras</button>
-            <button mat-button matStepperNext>Siguiente</button>
-        </div>
-    </mat-step>
+                            <mat-form-field>
+                                <mat-label>Tipo documento</mat-label>
+                                <mat-select formControlName="documentTypeId" name="documentTypeId" id="documentTypeId"
+                                    required>
+                                    <mat-option disabled>Seleccione...</mat-option>
+                                    <mat-option *ngFor="let document of getDocumentsType()" [value]="document">
+                                        {{document.documentTypeName}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Seleccione el tipo documento</mat-error>
+                            </mat-form-field>
 
-    <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
-            <ng-template matStepLabel>Fotos</ng-template>
-        </form>
-        <div>
-            <button mat-button matStepperPrevious>Atras</button>
-            <button mat-button matStepperNext>Siguiente</button>
-        </div>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>Haz terminado.</p>
-        <div>
-            <button mat-button matStepperPrevious>Atras</button>
-            <button mat-button (click)="stepper.reset()">Guardar</button>
-        </div>
-    </mat-step>
-</mat-horizontal-stepper>
+                            <mat-form-field>
+                                <mat-label>Número documento</mat-label>
+                                <input matInput placeholder="Número documento" formControlName="dni" required>
+                                <mat-hint>Solo numeros son permitidos</mat-hint>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-label>Ciudad expedición</mat-label>
+                                <input matInput placeholder="Ciudad expedición" formControlName="cityNameDocument">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-label>Primer nombre</mat-label>
+                                <input matInput placeholder="Primer nombre" formControlName="firstName" required>
+                                <mat-hint>Solo caracteres son permitidos</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Segundo nombre</mat-label>
+                                <input matInput placeholder="Segundo nombre" formControlName="secondName">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-label>Primer apellido</mat-label>
+                                <input matInput placeholder="Primer apellido" formControlName="firstLastName" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-label>Segundo apellido</mat-label>
+                                <input matInput formControlName="secondLastName" placeholder="Segundo apellido">
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento"
+                                    formControlName="dateOfBirth" id="dateOfBirth" readonly (click)="picker.open()">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-label>Genero</mat-label>
+                                <mat-select formControlName="gender" name="gender" id="gender" required>
+                                    <mat-option disabled>Seleccione...</mat-option>
+                                    <mat-option value="H">Hombre</mat-option>
+                                    <mat-option value="M">Mujer</mat-option>
+                                </mat-select>
+                                <mat-error>Seleccione el genero</mat-error>
+                            </mat-form-field>
+                            <br>
+                            <mat-divider></mat-divider>
+                    <br>
+                    <div>
+                        <button mat-button color="primary" matStepperNext
+                            [disabled]="profileFormGroup.invalid">Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="addressFormGroup">
+                <form [formGroup]="addressFormGroup">
+                    <ng-template matStepLabel>Dirección</ng-template>
+
+                    <mat-form-field>
+                        <mat-label>Departamento</mat-label>
+                        <mat-select formControlName="dapartmentId" name="dapartmentId" id="dapartmentId" required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione el departamento</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Ciudad</mat-label>
+                        <mat-select formControlName="cityAddressId" name="cityAddressId" id="cityAddressId" required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione la ciudad</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Barrio</mat-label>
+                        <mat-select formControlName="neighborhoodId" name="neighborhoodId" id="neighborhoodId" required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione el barrio</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Estrato social</mat-label>
+                        <mat-select formControlName="socialStratumId" name="socialStratumId" id="socialStratumId"
+                            required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione el estrato social</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Dirección</mat-label>
+                        <input matInput placeholder="Dirección">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Telefono</mat-label>
+                        <input matInput placeholder="Telefono">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Celular</mat-label>
+                        <input matInput placeholder="Celular">
+                    </mat-form-field>
+
+                </form>
+                <mat-divider></mat-divider>
+                <br/>
+                <div>
+                    <button mat-button matStepperPrevious>Atras</button>
+                    <button mat-button matStepperNext [disabled]="addressFormGroup.invalid">Siguiente</button>
+                    
+                </div>
+                <p>Form value: {{ addressFormGroup.value | json }}</p>
+                    <p>Form valid: {{ addressFormGroup.valid }}</p>
+                    <p>Form invalid: {{ addressFormGroup.invalid }}</p>
+            </mat-step>
+
+            <mat-step [stepControl]="otheresFormGroup">
+                <form [formGroup]="otheresFormGroup">
+                    <ng-template matStepLabel>Otros</ng-template>
+                </form>
+
+
+                <div>
+                    <button mat-button matStepperPrevious>Atras</button>
+                    <button mat-button matStepperNext>Siguiente</button>
+                </div>
+            </mat-step>
+
+            <mat-step [stepControl]="photosFormGroup">
+                <form [formGroup]="photosFormGroup">
+                    <ng-template matStepLabel>Fotos</ng-template>
+                </form>
+                <div>
+                    <button mat-button matStepperPrevious>Atras</button>
+                    <button mat-button matStepperNext>Siguiente</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>Haz terminado.</p>
+                <div>
+                    <button mat-button matStepperPrevious>Atras</button>
+                    <button mat-button>Guardar</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card-content>
+
+</mat-card>

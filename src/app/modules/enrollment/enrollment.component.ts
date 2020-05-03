@@ -1,5 +1,7 @@
+import { DocumentType } from 'src/app/shared/model/entities/documentType';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { DocumentsService } from '../core/services/documenttype/documents.service';
 
 @Component({
   selector: 'app-enrollment',
@@ -8,27 +10,55 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EnrollmentComponent implements OnInit {
 
-  isLinear = false;
+  profileFormGroup: FormGroup;
+  addressFormGroup: FormGroup;
+  otheresFormGroup: FormGroup;
+  photosFormGroup: FormGroup;
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup:FormGroup;
+  private documentTypeResponse; DocumentTypeResponse;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder, private documentsService: DocumentsService) { }
 
   ngOnInit(): void {
 
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+    this.profileFormGroup = this._formBuilder.group({
+      documentTypeId: [null, Validators.compose([Validators.required])],
+      dni: ['', Validators.required],
+      cityNameDocument: [''],
+      firstName: ['', Validators.required],
+      secondName: [''],
+      firstLastName: ['', Validators.required],
+      secondLastName: [''],
+      dateOfBirth: new FormControl(new Date()),
+      gender: [null, Validators.compose([Validators.required])]
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+    this.addressFormGroup = this._formBuilder.group({
+      dapartmentId: [null,Validators.compose([Validators.required])],
+      cityAddressId: [null,Validators.compose([Validators.required])],
+      neighborhoodId: [null,Validators.compose([Validators.required])],
+      address: [''],
+      telephone: [''],
+      cellphone: [''],
+      socialStratumId:[null,Validators.compose([Validators.required])]
     });
 
-    this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required]
+    this.otheresFormGroup = this._formBuilder.group({
+
     });
 
+    this.photosFormGroup = this._formBuilder.group({
+
+    });
+
+    this.documentTypeResponse = this.documentsService.getDocumentType()
+      .subscribe(data => this.documentTypeResponse = data);
+  }
+
+  getDocumentsType(): DocumentType[] {
+    if (this.documentTypeResponse == null) {
+      return new Array();
+    }
+    return this.documentTypeResponse.content;
   }
 
 }
