@@ -8,7 +8,7 @@
     <mat-card-content>
         <br>
         <br>
-        <mat-horizontal-stepper labelPosition="bottom" linear>
+        <mat-horizontal-stepper labelPosition="bottom" linear="true">
             <mat-step [stepControl]="profileFormGroup">
                 <form [formGroup]="profileFormGroup">
 
@@ -91,6 +91,9 @@
                         <mat-label>Departamento</mat-label>
                         <mat-select formControlName="dapartmentId" name="dapartmentId" id="dapartmentId" required>
                             <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option *ngFor="let department of getDepartments()" (onSelectionChange)="onChangeDepartment($event.source.value)"  [value]="department">
+                                    {{department.name}}
+                                </mat-option>
                         </mat-select>
                         <mat-error>Seleccione el departamento</mat-error>
                     </mat-form-field>
@@ -99,6 +102,9 @@
                         <mat-label>Ciudad</mat-label>
                         <mat-select formControlName="cityAddressId" name="cityAddressId" id="cityAddressId" required>
                             <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option *ngFor="let city of getCities()" (onSelectionChange)="onChangeCity($event.source.value)" [value]="city">
+                                    {{city.name}}
+                                </mat-option>
                         </mat-select>
                         <mat-error>Seleccione la ciudad</mat-error>
                     </mat-form-field>
@@ -107,6 +113,9 @@
                         <mat-label>Barrio</mat-label>
                         <mat-select formControlName="neighborhoodId" name="neighborhoodId" id="neighborhoodId" required>
                             <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option *ngFor="let neighborhood of getNeighborhoods()" [value]="neighborhood">
+                                    {{neighborhood.name + ' - '+ neighborhood.commune}}
+                                </mat-option>
                         </mat-select>
                         <mat-error>Seleccione el barrio</mat-error>
                     </mat-form-field>
