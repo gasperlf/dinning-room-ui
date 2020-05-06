@@ -1,5 +1,17 @@
-:host{
+
+.flex-row-container {
+    background: #aaa;
     display: flex;
-    flex-direction: column;
-    height: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.flex-row-container > .flex-row-item {
+    flex: 1 1 30%; /*grow | shrink | basis */
+    height: 202px;
+}
+
+.flex-row-item {
+  background-color: #fff4e6;
+  border: 1px solid #f76707;
 }

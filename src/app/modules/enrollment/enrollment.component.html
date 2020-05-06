@@ -8,73 +8,72 @@
     <mat-card-content>
         <br>
         <br>
-        <mat-horizontal-stepper labelPosition="bottom" linear="true">
+        <mat-horizontal-stepper labelPosition="bottom" linear="false">
             <mat-step [stepControl]="profileFormGroup">
                 <form [formGroup]="profileFormGroup">
 
                     <ng-template matStepLabel>Datos personales</ng-template>
 
-                            <mat-form-field>
-                                <mat-label>Tipo documento</mat-label>
-                                <mat-select formControlName="documentTypeId" name="documentTypeId" id="documentTypeId"
-                                    required>
-                                    <mat-option disabled>Seleccione...</mat-option>
-                                    <mat-option *ngFor="let document of getDocumentsType()" [value]="document">
-                                        {{document.documentTypeName}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>Seleccione el tipo documento</mat-error>
-                            </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Tipo documento</mat-label>
+                        <mat-select formControlName="documentTypeId" name="documentTypeId" id="documentTypeId" required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option *ngFor="let document of getDocumentsType()" [value]="document">
+                                {{document.documentTypeName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione el tipo documento</mat-error>
+                    </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Número documento</mat-label>
-                                <input matInput placeholder="Número documento" formControlName="dni" required>
-                                <mat-hint>Solo numeros son permitidos</mat-hint>
-                            </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Número documento</mat-label>
+                        <input matInput placeholder="Número documento" formControlName="dni" required>
+                        <mat-hint>Solo numeros son permitidos</mat-hint>
+                    </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Ciudad expedición</mat-label>
-                                <input matInput placeholder="Ciudad expedición" formControlName="cityNameDocument">
-                            </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Ciudad expedición</mat-label>
+                        <input matInput placeholder="Ciudad expedición" formControlName="cityNameDocument">
+                    </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Primer nombre</mat-label>
-                                <input matInput placeholder="Primer nombre" formControlName="firstName" required>
-                                <mat-hint>Solo caracteres son permitidos</mat-hint>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-label>Segundo nombre</mat-label>
-                                <input matInput placeholder="Segundo nombre" formControlName="secondName">
-                            </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Primer nombre</mat-label>
+                        <input matInput placeholder="Primer nombre" formControlName="firstName" required>
+                        <mat-hint>Solo caracteres son permitidos</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Segundo nombre</mat-label>
+                        <input matInput placeholder="Segundo nombre" formControlName="secondName">
+                    </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Primer apellido</mat-label>
-                                <input matInput placeholder="Primer apellido" formControlName="firstLastName" required>
-                            </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Primer apellido</mat-label>
+                        <input matInput placeholder="Primer apellido" formControlName="firstLastName" required>
+                    </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Segundo apellido</mat-label>
-                                <input matInput formControlName="secondLastName" placeholder="Segundo apellido">
-                            </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Segundo apellido</mat-label>
+                        <input matInput formControlName="secondLastName" placeholder="Segundo apellido">
+                    </mat-form-field>
 
-                            <mat-form-field>
-                                <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento"
-                                    formControlName="dateOfBirth" id="dateOfBirth" readonly (click)="picker.open()">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento"
+                            formControlName="dateOfBirth" id="dateOfBirth" readonly (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Genero</mat-label>
-                                <mat-select formControlName="gender" name="gender" id="gender" required>
-                                    <mat-option disabled>Seleccione...</mat-option>
-                                    <mat-option value="H">Hombre</mat-option>
-                                    <mat-option value="M">Mujer</mat-option>
-                                </mat-select>
-                                <mat-error>Seleccione el genero</mat-error>
-                            </mat-form-field>
-                            <br>
-                            <mat-divider></mat-divider>
+                    <mat-form-field>
+                        <mat-label>Genero</mat-label>
+                        <mat-select formControlName="gender" name="gender" id="gender" required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option value="H">Hombre</mat-option>
+                            <mat-option value="M">Mujer</mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione el genero</mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-divider></mat-divider>
                     <br>
                     <div>
                         <button mat-button color="primary" matStepperNext
@@ -91,9 +90,10 @@
                         <mat-label>Departamento</mat-label>
                         <mat-select formControlName="dapartmentId" name="dapartmentId" id="dapartmentId" required>
                             <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let department of getDepartments()" (onSelectionChange)="onChangeDepartment($event.source.value)"  [value]="department">
-                                    {{department.name}}
-                                </mat-option>
+                            <mat-option *ngFor="let department of getDepartments()"
+                                (onSelectionChange)="onChangeDepartment($event.source.value)" [value]="department">
+                                {{department.name}}
+                            </mat-option>
                         </mat-select>
                         <mat-error>Seleccione el departamento</mat-error>
                     </mat-form-field>
@@ -102,9 +102,10 @@
                         <mat-label>Ciudad</mat-label>
                         <mat-select formControlName="cityAddressId" name="cityAddressId" id="cityAddressId" required>
                             <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let city of getCities()" (onSelectionChange)="onChangeCity($event.source.value)" [value]="city">
-                                    {{city.name}}
-                                </mat-option>
+                            <mat-option *ngFor="let city of getCities()"
+                                (onSelectionChange)="onChangeCity($event.source.value)" [value]="city">
+                                {{city.name}}
+                            </mat-option>
                         </mat-select>
                         <mat-error>Seleccione la ciudad</mat-error>
                     </mat-form-field>
@@ -114,68 +115,122 @@
                         <mat-select formControlName="neighborhoodId" name="neighborhoodId" id="neighborhoodId" required>
                             <mat-option disabled>Seleccione...</mat-option>
                             <mat-option *ngFor="let neighborhood of getNeighborhoods()" [value]="neighborhood">
-                                    {{neighborhood.name + ' - '+ neighborhood.commune}}
-                                </mat-option>
+                                {{neighborhood.name + ' - '+ neighborhood.commune}}
+                            </mat-option>
                         </mat-select>
                         <mat-error>Seleccione el barrio</mat-error>
                     </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Dirección</mat-label>
+                        <input matInput formControlName="address" placeholder="Dirección" required>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Telefono</mat-label>
+                        <input matInput formControlName="telephoneNumber" placeholder="Telefono">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Celular</mat-label>
+                        <input matInput formControlName="cellphone" placeholder="Celular">
+                    </mat-form-field>
+
+                </form>
+                <mat-divider></mat-divider>
+                <br />
+                <div>
+                    <button mat-button matStepperPrevious>Atras</button>
+                    <button mat-button matStepperNext [disabled]="addressFormGroup.invalid">Siguiente</button>
+                </div>
+
+            </mat-step>
+
+            <mat-step [stepControl]="otheresFormGroup">
+                <form [formGroup]="otheresFormGroup">
+                    <ng-template matStepLabel>Otros</ng-template>
 
                     <mat-form-field>
                         <mat-label>Estrato social</mat-label>
                         <mat-select formControlName="socialStratumId" name="socialStratumId" id="socialStratumId"
                             required>
                             <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option *ngFor="let socialStratum of getSocialStratums()" [value]="socialStratum">
+                                {{socialStratum.socialStratumName}}
+                            </mat-option>
                         </mat-select>
                         <mat-error>Seleccione el estrato social</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>Dirección</mat-label>
-                        <input matInput placeholder="Dirección">
+                        <mat-label>Grupo etnico</mat-label>
+                        <mat-select formControlName="ecthnicGroupId" name="ecthnicGroupId" id="ecthnicGroupId" required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option *ngFor="let ethnicGroup of getEthnicGroups()" [value]="ethnicGroup">
+                                {{ethnicGroup.ethnicGroupName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione el Grupo etnico</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>Telefono</mat-label>
-                        <input matInput placeholder="Telefono">
+                        <mat-label>Grado escolar</mat-label>
+                        <mat-select formControlName="gradeId" name="gradeId" id="gradeId" required>
+                            <mat-option disabled>Seleccione...</mat-option>
+                            <mat-option *ngFor="let grade of getGrades()" [value]="grade">
+                                {{grade.gradeName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Seleccione el Grado escolar</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>Celular</mat-label>
-                        <input matInput placeholder="Celular">
+                        <mat-label>Nombre de grupo</mat-label>
+                        <input matInput formControlName="nameGroup" placeholder="Nombre de grupo">
                     </mat-form-field>
 
                 </form>
                 <mat-divider></mat-divider>
-                <br/>
-                <div>
-                    <button mat-button matStepperPrevious>Atras</button>
-                    <button mat-button matStepperNext [disabled]="addressFormGroup.invalid">Siguiente</button>
-                    
-                </div>
-                <p>Form value: {{ addressFormGroup.value | json }}</p>
-                    <p>Form valid: {{ addressFormGroup.valid }}</p>
-                    <p>Form invalid: {{ addressFormGroup.invalid }}</p>
-            </mat-step>
-
-            <mat-step [stepControl]="otheresFormGroup">
-                <form [formGroup]="otheresFormGroup">
-                    <ng-template matStepLabel>Otros</ng-template>
-                </form>
-
+                <br />
 
                 <div>
                     <button mat-button matStepperPrevious>Atras</button>
-                    <button mat-button matStepperNext>Siguiente</button>
+                    <button mat-button matStepperNext [disabled]="otheresFormGroup.invalid">Siguiente</button>
                 </div>
+
+                <p>Form value: {{ otheresFormGroup.value | json }}</p>
+                <p>Form valid: {{ otheresFormGroup.valid }}</p>
+                <p>Form invalid: {{ otheresFormGroup.invalid }}</p>
             </mat-step>
 
             <mat-step [stepControl]="photosFormGroup">
-                <form [formGroup]="photosFormGroup">
-                    <ng-template matStepLabel>Fotos</ng-template>
-                </form>
+                <div class="container">
+                    <form [formGroup]="photosFormGroup">
+                        <ng-template matStepLabel>Fotos</ng-template>
+
+                        <div style="text-align: center;">
+                            <webcam [height]="500" [width]="500" [trigger]="triggerObservable"
+                                (imageCapture)="handleImage($event)" [imageQuality]="1" [videoOptions]="videoOptions"
+                                (initError)="handleInitError($event)">
+                            </webcam>
+                            <br />
+                            <button mat-button (click)="triggerSnapshot();">Capturar</button>
+                        </div>
+                        <br>
+                        <br>
+
+                        <div class="flex-row-container">
+                            <div class="flex-row-item" *ngFor="let webcamImage of captures; index as i">
+                                <img [src]="webcamImage.imageAsDataUrl" />
+                            </div>
+                        </div>
+                        <br>
+                    </form>
+                </div>
+                <h4 *ngIf="errors.length > 0">Messages:</h4>
                 <div>
                     <button mat-button matStepperPrevious>Atras</button>
-                    <button mat-button matStepperNext>Siguiente</button>
+                    <button mat-button matStepperNext [disabled]="captures.length!=6">Siguiente</button>
                 </div>
             </mat-step>
             <mat-step>

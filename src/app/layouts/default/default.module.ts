@@ -26,7 +26,8 @@ import { DashboardComponent } from './../../modules/dashboard/dashboard.componen
 import { DefaultComponent } from './default.component';
 import { EnrollmentComponent } from 'src/app/modules/enrollment/enrollment.component';
 import { DocumentsService } from 'src/app/modules/core/services/documenttype/documents.service';
-
+import {WebcamModule} from 'ngx-webcam';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 
@@ -54,7 +55,9 @@ import { DocumentsService } from 'src/app/modules/core/services/documenttype/doc
     MatNativeDateModule,
     MatCardModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    WebcamModule,
+    FlexLayoutModule
 
   ],
   providers: [
