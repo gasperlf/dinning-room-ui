@@ -1,3 +1,4 @@
+import { EnrollmentsService } from './../core/services/enrollments/enrollments.service';
 import { DocumentTypeResponse } from './../../shared/model/response/documenttyperesponse';
 import { EthnicGroupResponse } from './../../shared/model/response/ethnicgroupresponse';
 import { Grade } from './../../shared/model/entities/grade';
@@ -12,19 +13,26 @@ import { CityResponse } from './../../shared/model/response/cityresponse';
 import { LocationsService } from './../core/services/locations/locations.service';
 import { DepartmentResponse } from './../../shared/model/response/departmentresponse';
 import { DocumentType } from 'src/app/shared/model/entities/documentType';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DocumentsService } from '../core/services/documenttype/documents.service';
 import { SocialStratum } from 'src/app/shared/model/entities/socialstratum';
 import { EthnicGroup } from 'src/app/shared/model/entities/ethnicgroup';
 
-import {Subject, Observable} from 'rxjs';
-import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+import { Subject, Observable } from 'rxjs';
+import { WebcamImage, WebcamInitError } from 'ngx-webcam';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-enrollment',
   templateUrl: './enrollment.component.html',
-  styleUrls: ['./enrollment.component.scss']
+  styleUrls: ['./enrollment.component.scss'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false, showError: true }
+  }]
 })
 export class EnrollmentComponent implements OnInit {
 
@@ -41,7 +49,7 @@ export class EnrollmentComponent implements OnInit {
   private gradeResponse: GradeResponse;
   private ethnicGroupResponse: EthnicGroupResponse;
 
-  public captures: Array<WebcamImage>;
+  public captures: Array<string>;
 
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
@@ -49,7 +57,9 @@ export class EnrollmentComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
     private documentsService: DocumentsService,
     private locationsService: LocationsService,
-    private utilService: UtilService) {
+    private utilService: UtilService,
+    private enrollmentsService: EnrollmentsService,
+    private router:Router) {
     this.captures = [];
   }
 
@@ -156,41 +166,88 @@ export class EnrollmentComponent implements OnInit {
     return this.ethnicGroupResponse.content;
   }
 
+  /**
+   * Capture images
+   */
+  errors: WebcamInitError[] = [];
+  // latest snapshot
+  webcamImage: WebcamImage = null;
 
-  public triggerSnapshot(): void {
+  triggerSnapshot(): void {
     this.trigger.next();
   }
 
-  public errors: WebcamInitError[] = [];
-  // latest snapshot
-  public webcamImage: WebcamImage = null;
-
-  public videoOptions: MediaTrackConstraints = {
-     width: {ideal: 280},
-     height: {ideal: 200}
+  videoOptions: MediaTrackConstraints = {
+    width: { ideal: 288 },
+    height: { ideal: 288 },
+    noiseSuppression: true
   };
 
-  public handleInitError(error: WebcamInitError): void {
+  handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
   }
 
-  public handleImage(webcamImage: WebcamImage): void {
+  handleImage(webcamImage: WebcamImage): void {
 
-    if(this.captures.length<=5){
-      this.captures.push(webcamImage);
+    if (this.captures.length <= 8) {
+      this.captures.push(webcamImage.imageAsBase64);
     }
-    
+
   }
 
   public get triggerObservable(): Observable<void> {
     return this.trigger.asObservable();
   }
 
+  removeImages() {
+    this.captures = [];
+  }
+
+  removeImage(index: number) {
+    this.captures.splice(index, 1);
+  }
+
+  /**
+   * save information from view
+   */
+
+  saveInfoBeneficiary() {
+
+    var request = {
+      documentTypeId: this.profileFormGroup.value.documentTypeId.documentTypeId,
+      dni: this.profileFormGroup.value.dni,
+      cityNameDocumentExpedition: this.profileFormGroup.value.cityNameDocument,
+      firstName: this.profileFormGroup.value.firstName,
+      secondName: this.profileFormGroup.value.secondName,
+      firstLastName: this.profileFormGroup.value.firstLastName,
+      secondLastName: this.profileFormGroup.value.secondLastName,
+      dateOfBirth: this.profileFormGroup.value.dateOfBirth,
+      cityNameOfBirth: this.profileFormGroup.value.cityOfBirth,
+      gender: this.profileFormGroup.value.gender,
+      cityAddressId: this.addressFormGroup.value.cityAddressId.id,
+      neighborhoodId: this.addressFormGroup.value.neighborhoodId.id,
+      address: this.addressFormGroup.value.address,
+      telephoneNumber: this.addressFormGroup.value.telephoneNumber,
+      cellphoneNumber: this.addressFormGroup.value.cellphone,
+      ethnicGroupId: this.otheresFormGroup.value.ethnicGroupId.ethnicGroupId,
+      gradeId: this.otheresFormGroup.value.gradeId.gradeId,
+      groupName: this.otheresFormGroup.value.nameGroup,
+      socialStratumId: this.otheresFormGroup.value.socialStratumId.socialStratumId,
+      instituteId: 1,
+      images: this.captures
+    };
+
+    this.enrollmentsService.enrollment(request);
+
+    this.router.navigateByUrl('/admin/enrollments');
+
+  }
 
   /**
    * inititialize of different forms to the view.
    */
   private createForms() {
+
     this.profileFormGroup = this._formBuilder.group({
       documentTypeId: [null, Validators.compose([Validators.required])],
       dni: ['', Validators.required],
@@ -199,28 +256,31 @@ export class EnrollmentComponent implements OnInit {
       secondName: [''],
       firstLastName: ['', Validators.required],
       secondLastName: [''],
-      dateOfBirth: new FormControl(new Date()),
-      gender: [null, Validators.compose([Validators.required])]
+      dateOfBirth: ['', Validators.required],
+      gender: [null, Validators.compose([Validators.required])],
+      cityOfBirth: ['', Validators.required]
     });
     this.addressFormGroup = this._formBuilder.group({
       dapartmentId: [null, Validators.compose([Validators.required])],
       cityAddressId: [null, Validators.compose([Validators.required])],
       neighborhoodId: [null, Validators.compose([Validators.required])],
-      address: [''],
+      address: ['', Validators.compose([Validators.required])],
       telephoneNumber: [''],
       cellphone: ['']
     });
 
     this.otheresFormGroup = this._formBuilder.group({
       socialStratumId: [null, Validators.compose([Validators.required])],
-      ecthnicGroupId: [null, Validators.compose([Validators.required])],
+      ethnicGroupId: [null, Validators.compose([Validators.required])],
       gradeId: [null, Validators.compose([Validators.required])],
       nameGroup: [''],
     });
 
     this.photosFormGroup = this._formBuilder.group({
-
     });
+
+    this.captures = [];
+
   }
 
 }

@@ -1,244 +1,293 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title>
-            <h4>Formulario de resgitro</h4>
+            <div>
+                <mat-icon color="accent">recent_actors</mat-icon>
+                <span class="aligned-with-icon">Formulario de resgitro</span>
+            </div>
+            <br>
             <mat-divider></mat-divider>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <br>
         <br>
-        <mat-horizontal-stepper labelPosition="bottom" linear="false">
-            <mat-step [stepControl]="profileFormGroup">
+        <mat-horizontal-stepper labelPosition="bottom" linear="true">
+            <mat-step [stepControl]="profileFormGroup" state="person_add">
                 <form [formGroup]="profileFormGroup">
 
                     <ng-template matStepLabel>Datos personales</ng-template>
+                    <div fxLayout="column">
 
-                    <mat-form-field>
-                        <mat-label>Tipo documento</mat-label>
-                        <mat-select formControlName="documentTypeId" name="documentTypeId" id="documentTypeId" required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let document of getDocumentsType()" [value]="document">
-                                {{document.documentTypeName}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione el tipo documento</mat-error>
-                    </mat-form-field>
+                        <mat-form-field class="material-input-full-width">
+                            <mat-label>Tipo documento</mat-label>
+                            <mat-select formControlName="documentTypeId" name="documentTypeId" id="documentTypeId"
+                                required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option *ngFor="let document of getDocumentsType()" [value]="document">
+                                    {{document.documentTypeName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione el tipo documento</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Número documento</mat-label>
-                        <input matInput placeholder="Número documento" formControlName="dni" required>
-                        <mat-hint>Solo numeros son permitidos</mat-hint>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Número documento</mat-label>
+                            <input matInput placeholder="Número documento" formControlName="dni" required>
+                            <mat-hint>Solo numeros son permitidos</mat-hint>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Ciudad expedición</mat-label>
-                        <input matInput placeholder="Ciudad expedición" formControlName="cityNameDocument">
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Ciudad expedición</mat-label>
+                            <input matInput placeholder="Ciudad expedición" formControlName="cityNameDocument">
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Primer nombre</mat-label>
-                        <input matInput placeholder="Primer nombre" formControlName="firstName" required>
-                        <mat-hint>Solo caracteres son permitidos</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Segundo nombre</mat-label>
-                        <input matInput placeholder="Segundo nombre" formControlName="secondName">
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Primer nombre</mat-label>
+                            <input matInput placeholder="Primer nombre" formControlName="firstName" required>
+                            <mat-hint>Solo caracteres son permitidos</mat-hint>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Primer apellido</mat-label>
-                        <input matInput placeholder="Primer apellido" formControlName="firstLastName" required>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Segundo nombre</mat-label>
+                            <input matInput placeholder="Segundo nombre" formControlName="secondName">
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Segundo apellido</mat-label>
-                        <input matInput formControlName="secondLastName" placeholder="Segundo apellido">
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Primer apellido</mat-label>
+                            <input matInput placeholder="Primer apellido" formControlName="firstLastName" required>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento"
-                            formControlName="dateOfBirth" id="dateOfBirth" readonly (click)="picker.open()">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Segundo apellido</mat-label>
+                            <input matInput formControlName="secondLastName" placeholder="Segundo apellido">
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Genero</mat-label>
-                        <mat-select formControlName="gender" name="gender" id="gender" required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option value="H">Hombre</mat-option>
-                            <mat-option value="M">Mujer</mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione el genero</mat-error>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Genero</mat-label>
+                            <mat-select formControlName="gender" name="gender" id="gender" required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option value="H">Hombre</mat-option>
+                                <mat-option value="M">Mujer</mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione el genero</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Fecha de nacimiento</mat-label>
+                            <input matInput formControlName="dateOfBirth" id="dateOfBirth" required>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Lugar de nacimiento</mat-label>
+                            <input matInput formControlName="cityOfBirth" id="cityOfBirth"
+                                placeholder="Lugar de nacimiento" required>
+                        </mat-form-field>
+
+                    </div>
                     <br>
                     <mat-divider></mat-divider>
                     <br>
                     <div>
-                        <button mat-button color="primary" matStepperNext
+                        <button mat-raised-button color="primary" matStepperNext
                             [disabled]="profileFormGroup.invalid">Siguiente</button>
                     </div>
+                    <p>{{ profileFormGroup.value | json }}</p>
+
                 </form>
             </mat-step>
 
-            <mat-step [stepControl]="addressFormGroup">
+            <mat-step [stepControl]="addressFormGroup" state="edit_location">
                 <form [formGroup]="addressFormGroup">
                     <ng-template matStepLabel>Dirección</ng-template>
+                    <div fxLayout="column">
+                        <mat-form-field>
+                            <mat-label>Departamento</mat-label>
+                            <mat-select formControlName="dapartmentId" name="dapartmentId" id="dapartmentId" required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option *ngFor="let department of getDepartments()"
+                                    (onSelectionChange)="onChangeDepartment($event.source.value)" [value]="department">
+                                    {{department.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione el departamento</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Departamento</mat-label>
-                        <mat-select formControlName="dapartmentId" name="dapartmentId" id="dapartmentId" required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let department of getDepartments()"
-                                (onSelectionChange)="onChangeDepartment($event.source.value)" [value]="department">
-                                {{department.name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione el departamento</mat-error>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Ciudad</mat-label>
+                            <mat-select formControlName="cityAddressId" name="cityAddressId" id="cityAddressId"
+                                required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option *ngFor="let city of getCities()"
+                                    (onSelectionChange)="onChangeCity($event.source.value)" [value]="city">
+                                    {{city.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione la ciudad</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Ciudad</mat-label>
-                        <mat-select formControlName="cityAddressId" name="cityAddressId" id="cityAddressId" required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let city of getCities()"
-                                (onSelectionChange)="onChangeCity($event.source.value)" [value]="city">
-                                {{city.name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione la ciudad</mat-error>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Barrio</mat-label>
+                            <mat-select formControlName="neighborhoodId" name="neighborhoodId" id="neighborhoodId"
+                                required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option *ngFor="let neighborhood of getNeighborhoods()" [value]="neighborhood">
+                                    {{neighborhood.name + ' - '+ neighborhood.commune}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione el barrio</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Barrio</mat-label>
-                        <mat-select formControlName="neighborhoodId" name="neighborhoodId" id="neighborhoodId" required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let neighborhood of getNeighborhoods()" [value]="neighborhood">
-                                {{neighborhood.name + ' - '+ neighborhood.commune}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione el barrio</mat-error>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Dirección</mat-label>
+                            <input matInput formControlName="address" placeholder="Dirección" required>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Dirección</mat-label>
-                        <input matInput formControlName="address" placeholder="Dirección" required>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Telefono</mat-label>
+                            <input matInput formControlName="telephoneNumber" placeholder="Telefono">
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Telefono</mat-label>
-                        <input matInput formControlName="telephoneNumber" placeholder="Telefono">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Celular</mat-label>
-                        <input matInput formControlName="cellphone" placeholder="Celular">
-                    </mat-form-field>
-
+                        <mat-form-field>
+                            <mat-label>Celular</mat-label>
+                            <input matInput formControlName="cellphone" placeholder="Celular">
+                        </mat-form-field>
+                    </div>
                 </form>
                 <mat-divider></mat-divider>
                 <br />
-                <div>
-                    <button mat-button matStepperPrevious>Atras</button>
-                    <button mat-button matStepperNext [disabled]="addressFormGroup.invalid">Siguiente</button>
+                <div class="button-row">
+                    <button mat-raised-button matStepperPrevious [disabled]="profileFormGroup.invalid">Atras</button>
+                    <button mat-raised-button color="primary" matStepperNext
+                        [disabled]="addressFormGroup.invalid">Siguiente</button>
                 </div>
+                <p>{{ addressFormGroup.value | json }}</p>
 
             </mat-step>
 
-            <mat-step [stepControl]="otheresFormGroup">
+            <mat-step [stepControl]="otheresFormGroup" state="assignment">
                 <form [formGroup]="otheresFormGroup">
                     <ng-template matStepLabel>Otros</ng-template>
+                    <div fxLayout="column">
+                        <mat-form-field>
+                            <mat-label>Estrato social</mat-label>
+                            <mat-select formControlName="socialStratumId" name="socialStratumId" id="socialStratumId"
+                                required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option *ngFor="let socialStratum of getSocialStratums()" [value]="socialStratum">
+                                    {{socialStratum.socialStratumName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione el estrato social</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Estrato social</mat-label>
-                        <mat-select formControlName="socialStratumId" name="socialStratumId" id="socialStratumId"
-                            required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let socialStratum of getSocialStratums()" [value]="socialStratum">
-                                {{socialStratum.socialStratumName}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione el estrato social</mat-error>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Grupo etnico</mat-label>
+                            <mat-select formControlName="ethnicGroupId" name="ethnicGroupId" id="ethnicGroupId"
+                                required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option *ngFor="let ethnicGroup of getEthnicGroups()" [value]="ethnicGroup">
+                                    {{ethnicGroup.ethnicGroupName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione el Grupo etnico</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Grupo etnico</mat-label>
-                        <mat-select formControlName="ecthnicGroupId" name="ecthnicGroupId" id="ecthnicGroupId" required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let ethnicGroup of getEthnicGroups()" [value]="ethnicGroup">
-                                {{ethnicGroup.ethnicGroupName}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione el Grupo etnico</mat-error>
-                    </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Grado escolar</mat-label>
+                            <mat-select formControlName="gradeId" name="gradeId" id="gradeId" required>
+                                <mat-option disabled>Seleccione...</mat-option>
+                                <mat-option *ngFor="let grade of getGrades()" [value]="grade">
+                                    {{grade.gradeName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Seleccione el Grado escolar</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Grado escolar</mat-label>
-                        <mat-select formControlName="gradeId" name="gradeId" id="gradeId" required>
-                            <mat-option disabled>Seleccione...</mat-option>
-                            <mat-option *ngFor="let grade of getGrades()" [value]="grade">
-                                {{grade.gradeName}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Seleccione el Grado escolar</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Nombre de grupo</mat-label>
-                        <input matInput formControlName="nameGroup" placeholder="Nombre de grupo">
-                    </mat-form-field>
-
+                        <mat-form-field>
+                            <mat-label>Nombre de grupo</mat-label>
+                            <input matInput formControlName="nameGroup" placeholder="Nombre de grupo">
+                        </mat-form-field>
+                    </div>
                 </form>
                 <mat-divider></mat-divider>
                 <br />
 
-                <div>
-                    <button mat-button matStepperPrevious>Atras</button>
-                    <button mat-button matStepperNext [disabled]="otheresFormGroup.invalid">Siguiente</button>
+                <div class="button-row">
+                    <button mat-raised-button matStepperPrevious [disabled]="addressFormGroup.invalid">Atras</button>
+                    <button mat-raised-button color="primary" matStepperNext
+                        [disabled]="otheresFormGroup.invalid">Siguiente</button>
                 </div>
+                
+                <p>{{ otheresFormGroup.value | json }}</p>
 
-                <p>Form value: {{ otheresFormGroup.value | json }}</p>
-                <p>Form valid: {{ otheresFormGroup.valid }}</p>
-                <p>Form invalid: {{ otheresFormGroup.invalid }}</p>
             </mat-step>
 
-            <mat-step [stepControl]="photosFormGroup">
+            <mat-step [stepControl]="photosFormGroup" state="camera_enhance">
                 <div class="container">
                     <form [formGroup]="photosFormGroup">
                         <ng-template matStepLabel>Fotos</ng-template>
 
                         <div style="text-align: center;">
-                            <webcam [height]="500" [width]="500" [trigger]="triggerObservable"
+                            <webcam [height]="400" [width]="400" [trigger]="triggerObservable"
                                 (imageCapture)="handleImage($event)" [imageQuality]="1" [videoOptions]="videoOptions"
-                                (initError)="handleInitError($event)">
+                                imageType="image/bmp" (initError)="handleInitError($event)">
                             </webcam>
                             <br />
-                            <button mat-button (click)="triggerSnapshot();">Capturar</button>
+                            <button mat-button [disabled]="captures.length==9"
+                                (click)="triggerSnapshot();">Capturar</button>
+                            <button mat-button color="warn" [disabled]="captures.length==0"
+                                (click)="removeImages();">Borrar
+                                capturas</button>
                         </div>
                         <br>
-                        <br>
-
-                        <div class="flex-row-container">
-                            <div class="flex-row-item" *ngFor="let webcamImage of captures; index as i">
-                                <img [src]="webcamImage.imageAsDataUrl" />
+                        <div class="images" fxLayout="row wrap">
+                            <div fxFlex="0 0 32%" fxFlex.gt-sm="0 0 cal(33% -12)" [ngStyle.gt-sm]="{'margin.px':6}"
+                                [ngStyle]="{'margin.px':6, 'margin-bottom.px':20}"
+                                *ngFor="let webcamImage of captures; index as i">
+                                <mat-card>
+                                    <img mat-card-image [src]="webcamImage" />
+                                    <mat-divider></mat-divider>
+                                    <mat-card-actions>
+                                        <button mat-mini-fab color="warn" (click)="removeImage(i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-card-actions>
+                                </mat-card>
                             </div>
                         </div>
                         <br>
                     </form>
                 </div>
                 <h4 *ngIf="errors.length > 0">Messages:</h4>
-                <div>
-                    <button mat-button matStepperPrevious>Atras</button>
-                    <button mat-button matStepperNext [disabled]="captures.length!=6">Siguiente</button>
+                <mat-divider></mat-divider>
+                <br />
+                <div class="button-row">
+                    <button mat-raised-button matStepperPrevious [disabled]="otheresFormGroup.invalid">Atras</button>
+                    <button mat-raised-button color="primary" matStepperNext
+                        [disabled]="captures.length!=9">Siguiente</button>
                 </div>
             </mat-step>
-            <mat-step>
-                <ng-template matStepLabel>Done</ng-template>
-                <p>Haz terminado.</p>
-                <div>
-                    <button mat-button matStepperPrevious>Atras</button>
-                    <button mat-button>Guardar</button>
+            <mat-step state="save">
+                <ng-template matStepLabel>Confirmación datos</ng-template>
+                <h2 style="text-align:center">Para terminar guarde los datos recopilados</h2>
+                <img style="text-align:center" src="../../../assets/img/finish_proccess.jpg" alt="finish">
+                <!--
+                            <p>Form value: {{ profileFormGroup.value | json }}</p>
+                            <p>Form value: {{ addressFormGroup.value | json }}</p>
+                            <p>Form value: {{ otheresFormGroup.value | json }}</p>
+                            <p>Form value: {{ photosFormGroup.value | json }}</p>
+                            -->
+
+                <mat-divider></mat-divider>
+                <br><br>
+
+                <div class="button-row">
+                    <button mat-raised-button matStepperPrevious [disabled]="captures.length!=6">Atras</button>
+                    <button mat-raised-button color="primary" [disabled]="profileFormGroup.invalid && 
+                    addressFormGroup.invalid &&
+                    otheresFormGroup.invalid &&
+                     captures.length!=6" (click)="saveInfoBeneficiary()">Guardar</button>
                 </div>
             </mat-step>
         </mat-horizontal-stepper>
