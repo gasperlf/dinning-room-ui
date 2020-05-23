@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators'
 
 //environments
 import { environment } from './../../../../../environments/environment';
+import { BeneficiaryResponse } from 'src/app/shared/model/response/beneficiaryresponse';
 
 
 @Injectable({
@@ -20,6 +21,10 @@ export class EnrollmentsService {
 
   enrollment(data: any) {
     return this.http.post<any>(`${this.enrollmentApi}/enrollments`, data);
+  }
+
+  search(data:any):Observable<BeneficiaryResponse>{
+  return this.http.get<BeneficiaryResponse>(`${this.enrollmentApi}/enrollments/${data.dni}/beneficiary`);
   }
 
 }

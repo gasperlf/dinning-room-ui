@@ -1,3 +1,4 @@
+import { EnrollmentSearchComponent } from './../../modules/enrollment-search/enrollment-search.component';
 import { LocationsService } from './../../modules/core/services/locations/locations.service';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
 // from own custom module
 import { SharedModule } from './../../shared/shared.module';
 
@@ -26,8 +28,8 @@ import { DashboardComponent } from './../../modules/dashboard/dashboard.componen
 import { DefaultComponent } from './default.component';
 import { EnrollmentComponent } from 'src/app/modules/enrollment/enrollment.component';
 import { DocumentsService } from 'src/app/modules/core/services/documenttype/documents.service';
-import {WebcamModule} from 'ngx-webcam';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { WebcamModule } from 'ngx-webcam';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -36,6 +38,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     DefaultComponent,
     DashboardComponent,
     EnrollmentComponent,
+    EnrollmentSearchComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +60,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatIconModule,
     MatGridListModule,
     WebcamModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTableModule
 
   ],
   providers: [

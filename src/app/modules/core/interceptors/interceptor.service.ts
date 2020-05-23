@@ -12,7 +12,7 @@ export class InterceptorService implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req)
-            .pipe(retry(2), catchError(this.handleError));
+            .pipe(retry(1), catchError(this.handleError));
     }
 
     handleError(error: HttpErrorResponse) {
