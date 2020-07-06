@@ -59,7 +59,7 @@ export class EnrollmentComponent implements OnInit {
     private locationsService: LocationsService,
     private utilService: UtilService,
     private enrollmentsService: EnrollmentsService,
-    private router:Router) {
+    private router: Router) {
     this.captures = [];
   }
 
@@ -237,9 +237,10 @@ export class EnrollmentComponent implements OnInit {
       images: this.captures
     };
 
-    this.enrollmentsService.enrollment(request);
+    this.enrollmentsService.enrollment(request).subscribe(value => {
+      this.router.navigateByUrl('/admin/enrollments/search');
+    });
 
-    this.router.navigateByUrl('/admin/enrollments');
 
   }
 

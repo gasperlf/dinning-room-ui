@@ -14,7 +14,7 @@ export class EnrollmentSearchComponent implements OnInit {
 
   searchEnrollment: FormGroup;
   beneficiaries: Array<BeneficiaryResponse>;
-  displayedColumns: string[] = ['document', 'names', 'surNames'];
+  displayedColumns: string[] = ['identifier','document', 'names', 'surNames','faceId'];
 
   constructor(private _formBuilder: FormBuilder,
     private enrollmentsService: EnrollmentsService) { }
